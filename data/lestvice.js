@@ -1,4 +1,4 @@
-{
+loadLestvice({
 	"normiraniStroski": 0.1,
 	"razredi": [
 		{
@@ -21,6 +21,6 @@
 	"paketi": {
 		"rocno": [],
 		"studentsko-delo": ["posebnaOsebnaOlajsava", "dodatnaSplosnaOlajsava", "splosnaOlajsava"],
-		"studentsko-delo-vzdrzevan": ["posebnaOsebnaOlajsava"],
+		"studentsko-delo-vzdrzevan": ["posebnaOsebnaOlajsava"]
 	}
-}
+});

@@ -26,25 +26,16 @@
 					<label><input class="izracun" name="nacin-izracuna-radio" type="radio" value="studentsko-delo" /> študentsko delo</label>
 					<ul>
 						<li>
-							<label><input class="studensko-delo" type="checkbox" value="vzdrzevan" /> vzdrževan družinski član</label>
+							<label><input class="izracun studentsko-delo" type="checkbox" value="vzdrzevan" /> vzdrževan družinski član</label>
 						</li>
 					</ul>
 				</li>
 			</ul>
 			<h2>Olajšave</h2>
-			<ul>
-				<li>
-					<label><input class="olajsava" type="checkbox" value="splosnaOlajsava" /> splošna olajšava</label>
-				</li>
-				<li>
-					<label><input class="olajsava" type="checkbox" value="povisanaSplosnaOlajsava" /> povišana splošna olajšava</label>
-				</li>
-				<li>
-					<label><input class="olajsava" type="checkbox" value="posebnaOsebnaOlajsava" /> posebna osebna olajšava</label>
-				</li>
-				<li>
+			<ul id="olajsave-seznam">
+				<li class="olajsave-control">
 					<a id="dodaj-olajsavo-open" href="#">dodaj olajšavo</a>
-					<span id="dodaj-olajsavo-box"><input type="text" id="olajsava-name" /> - <input type="text" id="olajsava-value" /> <a id="dodaj-olajsavo-commit" href="#">dodaj</a></span>
+					<span id="dodaj-olajsavo-box"><input type="text" id="olajsava-name" placeholder="vrsta" /> - <input type="text" id="olajsava-value" placeholder="znesek" /> <a id="dodaj-olajsavo-commit" href="#">dodaj</a></span>
 				</li>
 			</ul>
 			<a id="izracun-dohodnine" href="#">Izračun</a>
@@ -58,6 +49,11 @@
 	</div>
 	<script type="text/javascript" src="ext/jquery-1.11.1.min.js"></script>
 	<script type="text/javascript" src="ext/underscore-min.js"></script>
+	<script type="text/javascript" src="ext/numeral.min.js"></script>
 	<script type="text/javascript" src="js/dohodnina.js"></script>
+	<script type="text/javascript" src="data/olajsave.js"></script>
+	<script type="text/javascript" src="data/lestvice.js"></script>
 </body>
 </html>
+
+

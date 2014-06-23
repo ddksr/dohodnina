@@ -1,4 +1,4 @@
-{
+loadOlajsave({
 	"splosnaOlajsava": {
 		"name": "Splošna olajšava",
 		"value": 3302.70
@@ -24,4 +24,4 @@
 		"name": "Posebna osebna olajšava",
 		"value": 2477.03
 	}
-}
+});
