@@ -1,0 +1,23 @@
+{
+	"splosnaOlajsava": {
+		"name": "Splošna olajšava",
+		"value": 3302.70
+	},
+	"dodatnaSplosnaOlajsava": {
+		"name": "Dodatna splošna olajšava",
+		"value": [
+			{
+				"if": 10866.37,
+				"then": 3217.12
+			},
+			{
+				"if": 12570.89,
+				"then": 1115.94
+			}
+		]
+	},
+	"posebnaOsebnaOlajsava": {
+		"name": "Posebna osebna olajšava",
+		"value": 0
+	}
+}
