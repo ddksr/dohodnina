@@ -1,9 +1,15 @@
 (function ($, _) {
-	var dohodnina = {},
+	var olajsave = {},
 		lestvice = {},
 		getValue = function (value, condition) {
 			if (!_.isArray(value) || !condition) { return value; }
 			return _.filter(value, function (elt) { return elt.cond <= condition; });
+		},
+		loadLestvice = function (data) {
+			lestvice = data;
+		},
+		loadOlajsave = function (data) {
+			olajsave = data;
 		},
 		calcDohodnina = function (total, out, types) {
 			
@@ -12,12 +18,8 @@
 
 		};
 
-	$.getJSON('data/lestvice.json', function (data) {
-		lestvice = data;
-	});
-	$.getJSON('data/olajsave.json', function (data) {
-		dohodnina = data;
-	});
+	$.getJSON('data/lestvice.json', loadLestvice);
+	$.getJSON('data/olajsave.json', loadOlajsave);
 
 	$('span#dodaj-olajsavo.box').hide();
 
