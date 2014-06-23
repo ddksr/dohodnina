@@ -7,12 +7,16 @@
 		"name": "Dodatna splošna olajšava",
 		"value": [
 			{
-				"if": 10866.37,
+				"cond": 10866.37,
 				"then": 3217.12
 			},
 			{
-				"if": 12570.89,
+				"cond": 12570.89,
 				"then": 1115.94
+			},
+			{
+				"cond": Infinity,
+				"then": 2477.03
 			}
 		]
 	},

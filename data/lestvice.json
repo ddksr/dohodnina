@@ -2,17 +2,25 @@
 	"normiraniStroski": 0.1,
 	"razredi": [
 		{
-			"if": 8021.34,
+			"cond": 8021.34,
 			"then": 0.16
 		},
 		{
-			"if": 18980.28,
+			"cond": 18980.28,
 			"then": 0.27
 		},
 		{
-			"if": 70907.20,
+			"cond": 70907.20,
 			"then": 0.41
 		},
-		0.5
-	]
+		{
+			"cond": Infinity,
+			"then": 0.5
+		}
+	],
+	"paketi": {
+		"rocno": [],
+		"studentsko-delo": ["posebnaOsebnaOlajsava", "dodatnaSplosnaOlajsava", "posebnaOsebnaOlajsava"],
+		"studentsko-delo-vzdrzevan": ["posebnaOsebnaOlajsava"],
+	}
 }

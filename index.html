@@ -19,20 +19,35 @@
 			</ul>
 			<h2>Način izračuna</h2>
 			<ul>
-				<li><input name="nacin-izracuna-radio" type="radio" checked="checked" /> ročno</li>
-				<li><input name="nacin-izracuna-radio" type="radio" /> študentsko delo</li>
+				<li>
+					<label><input class="izracun" name="nacin-izracuna-radio" type="radio" value="rocno" checked="checked" /> ročno</label>
+				</li>
+				<li>
+					<label><input class="izracun" name="nacin-izracuna-radio" type="radio" value="studentsko-delo" /> študentsko delo</label>
+					<ul>
+						<li>
+							<label><input class="studensko-delo" type="checkbox" value="vzdrzevan" /> vzdrževan družinski član</label>
+						</li>
+					</ul>
+				</li>
 			</ul>
-			<h3>Olajšave</h3>
+			<h2>Olajšave</h2>
 			<ul>
-				<li><input name="olajsave-radio" type="checkbox" checked="checked" /> splošna</li>
-				<li><input name="olajsave-radio" type="checkbox" checked="checked" /> povišana splošna</li>
-				<li><input name="olajsave-radio" type="checkbox" checked="checked" /> posebna</li>
-				<li> <a href="#">dodaj olajšavo</a> <input type="text" id="dodaj-olajšavo" /> <a href="#">dodaj</a></li>
+				<li>
+					<label><input class="olajsava" type="checkbox" value="splosnaOlajsava" /> splošna olajšava</label>
+				</li>
+				<li>
+					<label><input class="olajsava" type="checkbox" value="povisanaSplosnaOlajsava" /> povišana splošna olajšava</label>
+				</li>
+				<li>
+					<label><input class="olajsava" type="checkbox" value="posebnaOsebnaOlajsava" /> posebna osebna olajšava</label>
+				</li>
+				<li>
+					<a id="dodaj-olajsavo-open" href="#">dodaj olajšavo</a>
+					<span id="dodaj-olajsavo-box"><input type="text" id="olajsava-name" /> - <input type="text" id="olajsava-value" /> <a id="dodaj-olajsavo-commit" href="#">dodaj</a></span>
+				</li>
 			</ul>
-			<a href="#">Izračun</a>
-				
-			
-			 
+			<a id="izracun-dohodnine" href="#">Izračun</a>
 		</div>
 		<div id="calculations">
 			
@@ -42,6 +57,7 @@
 
 	</div>
 	<script type="text/javascript" src="ext/jquery-1.11.1.min.js"></script>
+	<script type="text/javascript" src="ext/underscore-min.js"></script>
 	<script type="text/javascript" src="js/dohodnina.js"></script>
 </body>
 </html>
