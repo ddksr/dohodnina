@@ -3,7 +3,7 @@
 		lestvice = null,
 		olajsaveUser = {},
 		olajsavaTemplate = '<li>'
-			+ '<label>'
+			+ '<label class="pure-checkbox">'
 			+ '<input class="olajsava olajsava-<%- id %>" type="checkbox" value="<%- id %>" />'
 			+ ' <%- name %> (<%- value %>)'
 			+ '</label>'
@@ -11,7 +11,7 @@
 		getValue = function (value, condition) {
 			if (!_.isArray(value) || !condition) { return value; }
 			return _.filter(value, function (elt) {
-				return elt.cond <= condition;
+				return elt.cond < condition;
 			});
 		},
 		loadLestvice = function (data) {
@@ -22,17 +22,120 @@
 			olajsave = data;
 			tryInit();
 		},
-		calcDohodnina = function (total, out, types) {
-			
+		loadLocalStorage = function () {
+			var storage;
+			if (! window.JSON || window.localStorage === undefined || window.localStorage === null) { return null; }
+			storage = localStorage['state'];
+			return storage && $.parseJSON(storage) || null;
 		},
-		displayDohodnina = function () {
+		saveLocalStorage = function (data) {
+			if (! window.JSON || window.localStorage === undefined || window.localStorage === null) { return; }
+			localStorage['state'] = JSON.stringify(data);
+		},
+		getFloat = function (flt) {
+			flt = flt + "";
+			flt.replace(/,/g, '.');
+			flt.replace(/./g, '');
+			return parseFloat(flt);
+		},
+		calcDohodnina = function (totalStr, outStr) {
+			var output = [],
+				total = totalStr && getFloat(totalStr) || 0,
+				out = outStr && getFloat(outStr) || 0,
+				exp = lestvice.normiraniStroski * total,
+				norm = total - exp,
+				tax = norm,
+				olajsavePickedList = _.map($('.olajsava:checked'), function (elt) {
+					return $(elt).val();
+				}),
+				olajsavePicked = (function (obj) {
+					var newAry = {};
+					_.each(olajsavePickedList, function (val) {
+						if(obj[val]) { newAry[val] = obj[val]; }
+					});
+					return newAry;
+				}($.extend(olajsave, olajsaveUser))),
+				razredi = [];
+			saveLocalStorage({
+				total: total,
+				out: out,
+				olajsaveUser: olajsaveUser,
+				olajsavePickedList: olajsavePickedList
+			});
+			output.push([
+				'Zaslužek', total
+			]);
+			output.push([
+				'Normirani stroški', exp
+			]);
+			_.each(olajsavePicked, function (specs, idOlajsave) {
+				var value = getValue(specs.value, norm);
+				if (_.isArray(value)) {
+					value = _.last(value);
+					value = value && value.then || 0;
+				}
+				output.push([
+					specs.name, value
+				]);
+				tax -= value;
+				
+			});
+			tax = tax > 0 ? tax : 0;
+			output.push(['Davčna osnova za dohodnino', tax]);
+			razredi = getValue(lestvice.razredi, tax);
+			tax = (function (taxInt) {
+				_.each(razredi, function (elt) {
+					var value = taxInt >= elt.cond ? (elt.cond * elt.then) : (taxInt * elt.then);
+					output.push([
+						'Odmerjena dohodnina po ' + parseInt(elt.then * 100) + '%',
+						value
+					]);
+					taxInt -= value;
+					if (taxInt < 0) { taxInt = 0; }
+				});
+				return taxInt;
+			}(tax));
 
+			output.push([
+				'SKUPAJ dohodnina', tax, 'end'
+			]);
+			output.push([
+				'Akontacija dohodnine', out, 'end'
+			]);
+
+			tax = tax - out;
+			
+			output.push([
+				'DOHODNINA ' + (tax < 0 ? '(vračilo)' : '(dolg)'),
+				tax,
+				'end last'
+			]);
+			console.log(output);
+			return output;
+		},
+		displayDohodnina = function (output) {
+			var table = $(document.createElement('table')).addClass('pure-table');
+			$('#calculations').empty();
+			_.each(output, function (row) {
+				var tr = $(document.createElement('tr'));
+				tr.append($(document.createElement('td')).append(row[0]));
+				tr.append($(document.createElement('td')).append(eur(row[1])));
+				if (row[2]) {
+					_.each(row[2].split(' '), function () {
+						tr.addClass(row[2]);
+					});
+				}
+				table.append(tr);
+			});
+			$('#calculations').append(table);
 		},
 		eur = function (val) {
-			return numeral(val).format('0,0.00') + ' €';
+			return numeral(val).format('0,0.00 $');
 		},
 		init = _.once(function () {
-			_.each(olajsave, function (specs, id) {
+			var storage = loadLocalStorage();
+			
+			_.each($.extend(olajsave, olajsaveUser), function (specs, id) {
 				var value = '';
 				if (_.isArray(specs.value)) {
 					_.each(specs.value, function (elt) {
@@ -49,6 +152,18 @@
 					id: id
 				}));
 			});
+			
+			if (storage) {
+				olajsaveUser = storage.olajsaveUser;
+
+				$('#letni-zasluzek').val(storage.total);
+				$('#akontacija-dohodnine').val(storage.out);
+				_.each(storage.olajsavePickedList, function (picked) {
+					console.log($('olajsava-' + picked).length)
+					$('.olajsava-' + picked).attr('checked', true);
+					$('.olajsava-' + picked).prop('checked', true);
+				});
+			}
 		}),
 		tryInit = function () {
 			if (olajsave && lestvice) { init(); }
@@ -57,6 +172,25 @@
 	//$.getJSON('data/lestvice.json', loadLestvice);
 	//$.getJSON('data/olajsave.json', loadOlajsave);
 
+	numeral.language('sl', {
+		delimiters: {
+			thousands: '.',
+			decimal: ','
+		},
+		abbreviations: {
+			thousand: 'k',
+			million: 'M',
+			billion: 'G',
+			trillion: 't'
+		},
+		currency: {
+			symbol: '€'
+		}
+	});
+
+	// switch between languages
+	numeral.language('sl');
+	
 	$('span#dodaj-olajsavo-box').hide();
 
 	$('#dodaj-olajsavo-open').on('click', function () {
@@ -97,13 +231,9 @@
 		
 	});
 	$('#izracun-dohodnine').on('click', function () {
-		var types = [],
-			total = $('#letni-zasluzek').val() || 0,
-			out = $('#akontacija-dohodnine').val() || 0;
-		$('.olajsava:checked').each(function () {
-			types.push($(this).val());
-		});
-		displayDohodnina(calcDohodnina(total, out, types));
+		var total = $('#letni-zasluzek').val(),
+			out = $('#akontacija-dohodnine').val();
+		displayDohodnina(calcDohodnina(total, out));
 	});
 
 

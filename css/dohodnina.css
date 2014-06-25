@@ -1,1 +1,30 @@
+div#header {
 
+}
+
+h1 {
+
+}
+
+div#left-bar {
+
+}
+
+div#calculations {
+	
+}
+
+ul {
+	list-style-type: none;
+	padding: 5px 0 0 5px;
+}
+
+tr.tax td {
+	
+}
+tr.end td {
+	font-weight: bold;
+}
+tr.last td {
+	background-color: #efefef;
+}

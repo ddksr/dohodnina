@@ -2,7 +2,7 @@
 <html>
 <head>
 	<title>Izračun dohodnine</title>
-	<link rel="" type="text/css" href="ext/pure-min.css" />
+	<link rel="stylesheet" type="text/css" href="ext/pure-min.css" />
 	<link rel="stylesheet" type="text/css" href="css/dohodnina.css" />
 
 	<meta charset="UTF-8" />
@@ -11,36 +11,50 @@
 	<div id="header">
 		<h1>Izračun dohodnine</h1>
 	</div>
-	<div id="content">
-		<div id="left-bar">
-			<ul>
-				<li>Letni zaslužek <input type="text" id="letni-zasluzek" /></li>
-				<li>Akontacija dohodnine<input type="text" id="akontacija dohodnine" /></li>
-			</ul>
-			<h2>Način izračuna</h2>
-			<ul>
-				<li>
-					<label><input class="izracun" name="nacin-izracuna-radio" type="radio" value="rocno" checked="checked" /> ročno</label>
-				</li>
-				<li>
-					<label><input class="izracun" name="nacin-izracuna-radio" type="radio" value="studentsko-delo" /> študentsko delo</label>
+	<div id="content" class="pure-g">
+		<div id="left-bar" class="pure-u-1-2">
+			<form class="pure-form pure-form-aligned">
+				<fieldset>
 					<ul>
-						<li>
-							<label><input class="izracun studentsko-delo" type="checkbox" value="vzdrzevan" /> vzdrževan družinski član</label>
+						<li class="pure-control-group">
+							<label for="letni-zasluzek">Letni zaslužek</label>
+							<input type="text" id="letni-zasluzek" />
+						</li>
+						<li class="pure-control-group">
+							<label for="akontacija-dohodnine">Akontacija dohodnine</label>
+							<input type="text" id="akontacija-dohodnine" />
 						</li>
 					</ul>
-				</li>
-			</ul>
-			<h2>Olajšave</h2>
-			<ul id="olajsave-seznam">
-				<li class="olajsave-control">
-					<a id="dodaj-olajsavo-open" href="#">dodaj olajšavo</a>
-					<span id="dodaj-olajsavo-box"><input type="text" id="olajsava-name" placeholder="vrsta" /> - <input type="text" id="olajsava-value" placeholder="znesek" /> <a id="dodaj-olajsavo-commit" href="#">dodaj</a></span>
-				</li>
-			</ul>
-			<a id="izracun-dohodnine" href="#">Izračun</a>
+					<h2>Način izračuna</h2>
+					<ul>
+						<li>
+							<label class="pure-radio"><input class="izracun" name="nacin-izracuna-radio" type="radio" value="rocno" checked="checked" /> ročno
+							</label>
+						</li>
+						<li>
+							<label class="pure-radio">
+								<input class="izracun pure-radio" name="nacin-izracuna-radio" type="radio" value="studentsko-delo" /> študentsko delo
+							</label>
+							<ul>
+								<li>
+									<label class="pure-checkbox"><input class="izracun studentsko-delo" type="checkbox" value="vzdrzevan" /> vzdrževan družinski član</label>
+								</li>
+							</ul>
+						</li>
+					</ul>
+					<h2>Olajšave</h2>
+					<ul id="olajsave-seznam">
+						<li class="olajsave-control">
+							<a id="dodaj-olajsavo-open" class="pure-button" href="#">dodaj olajšavo</a>
+							<span id="dodaj-olajsavo-box"><input type="text" id="olajsava-name" placeholder="vrsta" /> - <input type="text" id="olajsava-value" placeholder="znesek" /> <a id="dodaj-olajsavo-commit" class="pure-button" href="#">dodaj</a></span>
+						</li>
+					</ul>
+					<a id="izracun-dohodnine" class="pure-button" href="#">Izračun</a>
+					
+				</fieldset>
+			</form>
 		</div>
-		<div id="calculations">
+		<div id="calculations" class="pure-u-1-2">
 			
 		</div>
 	</div>
