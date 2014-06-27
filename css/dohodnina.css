@@ -1,22 +1,48 @@
 div#header {
+	background: black;
+	color: white;
+	padding: 5px 10px 2px 10px;
+}
 
+div#content {
+	margin: 10px 0 10px 0;
 }
 
 h1 {
-
+	font-size: 40px;
+	text-transform: uppercase;
 }
 
-div#left-bar {
-
+div#left-bar fieldset {
+	margin: 0 0 0 10px;
 }
 
-div#calculations {
-	
+div#calculations table {
+	margin-left: auto;
+	margin-right: auto;
+	width: 80%;
 }
 
 ul {
 	list-style-type: none;
 	padding: 5px 0 0 5px;
+}
+
+ul ul.nacin-izracuna-podrobno {
+	list-style-type: none;
+	padding: 0 0 0 20px;
+}
+
+ul ul.nacin-izracuna-podrobno li {
+	padding: 0;
+	margin: 0;
+}
+
+#dodaj-olajsavo-open {
+	font-size: 12px;
+}
+#izracun-dohodnine {
+	text-transform: uppercase;
 }
 
 tr.tax td {
@@ -27,4 +53,11 @@ tr.end td {
 }
 tr.last td {
 	background-color: #efefef;
+}
+
+.center {
+	text-align: center;
+}
+.right {
+	text-align: right;
 }

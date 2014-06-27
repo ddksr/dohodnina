@@ -63,7 +63,7 @@
 				olajsavePickedList: olajsavePickedList
 			});
 			output.push([
-				'Zaslužek', total
+				'Osnova dohodkov', total
 			]);
 			output.push([
 				'Normirani stroški', exp
@@ -78,16 +78,15 @@
 					specs.name, value
 				]);
 				tax -= value;
-				
 			});
 			tax = tax > 0 ? tax : 0;
-			output.push(['Davčna osnova za dohodnino', tax]);
+			output.push(['NETO osnova za obdavčitev', tax]);
 			razredi = getValue(lestvice.razredi, tax);
 			tax = (function (taxInt) {
 				_.each(razredi, function (elt) {
 					var value = taxInt >= elt.cond ? (elt.cond * elt.then) : (taxInt * elt.then);
 					output.push([
-						'Odmerjena dohodnina po ' + parseInt(elt.then * 100) + '%',
+						'Obračunana dohodnina po ' + parseInt(elt.then * 100) + '%',
 						value
 					]);
 					taxInt -= value;
@@ -97,17 +96,17 @@
 			}(tax));
 
 			output.push([
-				'SKUPAJ dohodnina', tax, 'end'
+				'Obveznost za dohodnino', tax, 'end'
 			]);
 			output.push([
-				'Akontacija dohodnine', out, 'end'
+				'Plačane akontacije dohodnine', out, 'end'
 			]);
 
 			tax = tax - out;
 			
 			output.push([
-				'DOHODNINA ' + (tax < 0 ? '(vračilo)' : '(dolg)'),
-				tax,
+				'DOHODNINA ' + (tax < 0 ? '(za vračilo)' : '(doplačilo)'),
+				Math.abs(tax),
 				'end last'
 			]);
 			console.log(output);
@@ -159,10 +158,11 @@
 				$('#letni-zasluzek').val(storage.total);
 				$('#akontacija-dohodnine').val(storage.out);
 				_.each(storage.olajsavePickedList, function (picked) {
-					console.log($('olajsava-' + picked).length)
 					$('.olajsava-' + picked).attr('checked', true);
 					$('.olajsava-' + picked).prop('checked', true);
 				});
+
+				displayDohodnina(calcDohodnina(storage.total, storage.out));
 			}
 		}),
 		tryInit = function () {

@@ -3,8 +3,10 @@
 <head>
 	<title>Izračun dohodnine</title>
 	<link rel="stylesheet" type="text/css" href="ext/pure-min.css" />
+	<link rel="stylesheet" type="text/css" href="ext/pure-grids-responsive-min.css" />
 	<link rel="stylesheet" type="text/css" href="css/dohodnina.css" />
 
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
 	<meta charset="UTF-8" />
 </head>
 <body>
@@ -12,12 +14,12 @@
 		<h1>Izračun dohodnine</h1>
 	</div>
 	<div id="content" class="pure-g">
-		<div id="left-bar" class="pure-u-1-2">
+		<div id="left-bar" class="pure-u-lg-1-2 pure-u-1">
 			<form class="pure-form pure-form-aligned">
 				<fieldset>
 					<ul>
 						<li class="pure-control-group">
-							<label for="letni-zasluzek">Letni zaslužek</label>
+							<label for="letni-zasluzek">Letni dohodki</label>
 							<input type="text" id="letni-zasluzek" />
 						</li>
 						<li class="pure-control-group">
@@ -33,9 +35,9 @@
 						</li>
 						<li>
 							<label class="pure-radio">
-								<input class="izracun pure-radio" name="nacin-izracuna-radio" type="radio" value="studentsko-delo" /> študentsko delo
+								<input class="izracun" name="nacin-izracuna-radio" type="radio" value="studentsko-delo" /> študentsko delo
 							</label>
-							<ul>
+							<ul class="nacin-izracuna-podrobno">
 								<li>
 									<label class="pure-checkbox"><input class="izracun studentsko-delo" type="checkbox" value="vzdrzevan" /> vzdrževan družinski član</label>
 								</li>
@@ -49,12 +51,14 @@
 							<span id="dodaj-olajsavo-box"><input type="text" id="olajsava-name" placeholder="vrsta" /> - <input type="text" id="olajsava-value" placeholder="znesek" /> <a id="dodaj-olajsavo-commit" class="pure-button" href="#">dodaj</a></span>
 						</li>
 					</ul>
-					<a id="izracun-dohodnine" class="pure-button" href="#">Izračun</a>
+					<div class="center">
+						<a id="izracun-dohodnine" class="pure-button" href="#">Izračun</a>
+					</div>
 					
 				</fieldset>
 			</form>
 		</div>
-		<div id="calculations" class="pure-u-1-2">
+		<div id="calculations" class="pure-u-lg-1-2 pure-u-1">
 			
 		</div>
 	</div>
