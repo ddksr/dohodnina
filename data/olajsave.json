@@ -15,7 +15,7 @@
 				"then": 1115.94
 			},
 			{
-				"cond": Infinity,
+				"cond": "inf",
 				"then": 0
 			}
 		]
@@ -30,6 +30,6 @@
 	},
 	"olajsavaZaProstovoljnoPokojninskoZaravovanje": {
 		"name": "Olajšava za prostovoljno dodatno pokojninsko zavarovanje",
-		"value": 2819.09,
+		"value": 2819.09
 	}
 }

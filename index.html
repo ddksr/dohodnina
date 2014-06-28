@@ -38,11 +38,11 @@
 						</li>
 						<li>
 							<label class="pure-radio">
-								<input class="izracun" name="nacin-izracuna-radio" type="radio" value="studentsko-delo" /> študentsko delo
+								<input class="izracun" name="nacin-izracuna-radio" type="radio" value="studentskoDelo" /> študentsko delo
 							</label>
 							<ul class="nacin-izracuna-podrobno">
 								<li>
-									<label class="pure-checkbox"><input class="izracun studentsko-delo" type="checkbox" value="vzdrzevan" /> vzdrževan družinski član</label>
+									<label class="pure-checkbox"><input class="izracun studentskoDelo" type="checkbox" value="Vzdrzevan" /> vzdrževan družinski član</label>
 								</li>
 							</ul>
 						</li>
@@ -58,7 +58,9 @@
 						<a id="izracun-dohodnine" class="pure-button pure-button-primary" href="#">Izračun</a> 
 						<a id="pobrisi-zgodovino" class="pure-button" href="#">Pobriši zgodovino</a>
 					</div>
-					
+					<div class="topdown">
+						<label><input type="checkbox" id="nic-zgodovine" value="1" /> Ne shranjuj zgodovine</label>
+					</div>
 				</fieldset>
 			</form>
 		</div>
@@ -73,8 +75,6 @@
 	<script type="text/javascript" src="ext/underscore-min.js"></script>
 	<script type="text/javascript" src="ext/numeral.min.js"></script>
 	<script type="text/javascript" src="js/dohodnina.js"></script>
-	<script type="text/javascript" src="data/olajsave.js"></script>
-	<script type="text/javascript" src="data/lestvice.js"></script>
 </body>
 </html>
 

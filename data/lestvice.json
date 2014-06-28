@@ -14,13 +14,13 @@
 			"then": 0.41
 		},
 		{
-			"cond": Infinity,
+			"cond": "inf",
 			"then": 0.5
 		}
 	],
 	"paketi": {
 		"rocno": [],
-		"studentsko-delo": ["posebnaOsebnaOlajsava", "dodatnaSplosnaOlajsava", "splosnaOlajsava"],
-		"studentsko-delo-vzdrzevan": ["posebnaOsebnaOlajsava"],
+		"studentskoDelo": ["posebnaOsebnaOlajsava", "dodatnaSplosnaOlajsava", "splosnaOlajsava"],
+		"studentskoDeloVzdrzevan": ["posebnaOsebnaOlajsava"]
 	}
 }

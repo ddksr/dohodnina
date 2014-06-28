@@ -8,6 +8,21 @@
 			+ ' <%- name %> (<%- value %>)'
 			+ '</label>'
 			+ '</li>',
+		cleanJSON = function (json) {
+			var cleaned = _.isArray(json) ? [] : {};
+			_.each(json, function (val, key) {
+				if (_.isObject(val)) {
+					cleaned[key] = cleanJSON(val);
+				} else if(val === "inf") {
+					cleaned[key] = Infinity;
+				} else if(val === "-inf") {
+					cleaned[key] = -Infinity;
+				} else {
+					cleaned[key] = val;
+				}
+			});
+			return cleaned;
+		},
 		getValue = function (value, condition) {
 			var out = [],
 				i = 0;
@@ -21,11 +36,11 @@
 			return [];
 		},
 		loadLestvice = function (data) {
-			lestvice = data;
+			lestvice = cleanJSON(data);
 			tryInit();
 		},
 		loadOlajsave = function (data) {
-			olajsave = data;
+			olajsave = cleanJSON(data);
 			tryInit();
 		},
 		loadLocalStorage = function () {
@@ -36,6 +51,7 @@
 		},
 		saveLocalStorage = function (data) {
 			if (! window.JSON || window.localStorage === undefined || window.localStorage === null) { return; }
+			if ($('#nic-zgodovine:checked').length) { return; }
 			localStorage['state'] = JSON.stringify(data);
 		},
 		getFloat = function (flt) {
@@ -77,12 +93,10 @@
 			]);
 			_.each(olajsavePicked, function (specs, idOlajsave) {
 				var value = getValue(specs.value, norm);
-				console.log([idOlajsave, specs, norm, value]);
 				if (_.isArray(value)) {
 					value = _.last(value);
 					value = value && value.then || 0;
 				}
-				console.log([idOlajsave, specs, norm, value]);
 				output.push([
 					specs.name, value
 				]);
@@ -91,7 +105,6 @@
 			tax = tax > 0 ? tax : 0;
 			output.push(['NETO osnova za obdavčitev', tax]);
 			razredi = getValue(lestvice.razredi, tax);
-			console.log(razredi)
 			tax = (function (taxIn) {
 				var taxOut = 0,
 					condPrev = 0;
@@ -103,10 +116,7 @@
 						'Obračunana dohodnina po ' + parseInt(elt.then * 100) + '%',
 						value
 					]);
-					console.log([taxIn >= elt.cond, taxIn, taxOut, (elt.cond-condPrev), value])
-					console.log(['val', value]);
 					taxOut += value;
-					console.log(['aft', taxIn, taxOut])
 					if (taxIn < 0) { taxIn = 0; }
 				});
 				return taxOut;
@@ -187,8 +197,12 @@
 			if (olajsave && lestvice) { init(); }
 		};
 
-	//$.getJSON('data/lestvice.json', loadLestvice);
-	//$.getJSON('data/olajsave.json', loadOlajsave);
+	$.getJSON('data/lestvice.json', loadLestvice).error(function (a, b, c) {
+		console.log([a, b, c])
+	});
+	$.getJSON('data/olajsave.json', loadOlajsave).error(function (a, b, c) {
+		console.log([a, b, c])
+	});
 
 	numeral.language('sl', {
 		delimiters: {
@@ -235,11 +249,12 @@
 	$('.izracun').on('click', function () {
 		var value = $('.izracun:checked').val(),
 			additional = null;
-		if (value == 'studentsko-delo') {
-			additional = $('.studentsko-delo:checked').val();
-			if (additional) { additional = '-' + additional; }
+		if (value == 'studentskoDelo') {
+			additional = $('.studentskoDelo:checked').val();
+			if (additional) {
+				value += additional;
+			}
 		}
-		value = value + (additional || '');
 		$('.olajsava').attr('checked', false);
 		$('.olajsava').prop('checked', false);
 		_.each(lestvice.paketi[value], function (type) {
@@ -262,8 +277,7 @@
 		$('#pobrisi-zgodovino').hide();
 	}
 
-	window['loadOlajsave'] = loadOlajsave;
-	window['loadLestvice'] = loadLestvice;
-
 	tryInit();
 }(jQuery, _));
+
+
