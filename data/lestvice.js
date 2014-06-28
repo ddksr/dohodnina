@@ -6,7 +6,7 @@ loadLestvice({
 			"then": 0.16
 		},
 		{
-			"cond": 18980.28,
+			"cond": 18960.28,
 			"then": 0.27
 		},
 		{

@@ -9,10 +9,16 @@
 			+ '</label>'
 			+ '</li>',
 		getValue = function (value, condition) {
-			if (!_.isArray(value) || !condition) { return value; }
-			return _.filter(value, function (elt) {
-				return elt.cond < condition;
-			});
+			var out = [],
+				i = 0;
+			if (!_.isArray(value) || condition === undefined) { return value; }
+			for (i = 0; i < value.length; i++) {
+				out.push(value[i]);
+				if (condition < value[i].cond) {
+					return out;
+				}
+			}
+			return [];
 		},
 		loadLestvice = function (data) {
 			lestvice = data;
@@ -34,8 +40,9 @@
 		},
 		getFloat = function (flt) {
 			flt = flt + "";
-			flt.replace(/,/g, '.');
-			flt.replace(/./g, '');
+			flt = flt.replace(/\./g, '');
+			flt = flt.replace(/,/g, '.');
+			flt = flt.replace(/ |€/g, '');
 			return parseFloat(flt);
 		},
 		calcDohodnina = function (totalStr, outStr) {
@@ -70,10 +77,12 @@
 			]);
 			_.each(olajsavePicked, function (specs, idOlajsave) {
 				var value = getValue(specs.value, norm);
+				console.log([idOlajsave, specs, norm, value]);
 				if (_.isArray(value)) {
 					value = _.last(value);
 					value = value && value.then || 0;
 				}
+				console.log([idOlajsave, specs, norm, value]);
 				output.push([
 					specs.name, value
 				]);
@@ -82,17 +91,25 @@
 			tax = tax > 0 ? tax : 0;
 			output.push(['NETO osnova za obdavčitev', tax]);
 			razredi = getValue(lestvice.razredi, tax);
-			tax = (function (taxInt) {
+			console.log(razredi)
+			tax = (function (taxIn) {
+				var taxOut = 0,
+					condPrev = 0;
 				_.each(razredi, function (elt) {
-					var value = taxInt >= elt.cond ? (elt.cond * elt.then) : (taxInt * elt.then);
+					var value = taxIn >= elt.cond ? ((elt.cond-condPrev) * elt.then) : (taxIn * elt.then);
+					condPrev = elt.cond;
+					
 					output.push([
 						'Obračunana dohodnina po ' + parseInt(elt.then * 100) + '%',
 						value
 					]);
-					taxInt -= value;
-					if (taxInt < 0) { taxInt = 0; }
+					console.log([taxIn >= elt.cond, taxIn, taxOut, (elt.cond-condPrev), value])
+					console.log(['val', value]);
+					taxOut += value;
+					console.log(['aft', taxIn, taxOut])
+					if (taxIn < 0) { taxIn = 0; }
 				});
-				return taxInt;
+				return taxOut;
 			}(tax));
 
 			output.push([
@@ -109,7 +126,6 @@
 				Math.abs(tax),
 				'end last'
 			]);
-			console.log(output);
 			return output;
 		},
 		displayDohodnina = function (output) {
@@ -133,7 +149,9 @@
 		},
 		init = _.once(function () {
 			var storage = loadLocalStorage();
-			
+			if (storage && storage.olajsaveUser) {
+				olajsaveUser = storage.olajsaveUser;
+			}
 			_.each($.extend(olajsave, olajsaveUser), function (specs, id) {
 				var value = '';
 				if (_.isArray(specs.value)) {
@@ -155,8 +173,8 @@
 			if (storage) {
 				olajsaveUser = storage.olajsaveUser;
 
-				$('#letni-zasluzek').val(storage.total);
-				$('#akontacija-dohodnine').val(storage.out);
+				$('#letni-zasluzek').val(eur(storage.total));
+				$('#akontacija-dohodnine').val(eur(storage.out));
 				_.each(storage.olajsavePickedList, function (picked) {
 					$('.olajsava-' + picked).attr('checked', true);
 					$('.olajsava-' + picked).prop('checked', true);
@@ -194,7 +212,7 @@
 	$('span#dodaj-olajsavo-box').hide();
 
 	$('#dodaj-olajsavo-open').on('click', function () {
-		$('#dodaj-olajsavo-open').hide(function () {
+		$('#dodaj-olajsavo-open').fadeOut(function () {
 			$('span#dodaj-olajsavo-box').fadeIn('slow');
 		});
 	});
@@ -210,7 +228,7 @@
 		olajsaveUser[id] = newOlajsava;
 		$('.olajsave-control').before(_.template(olajsavaTemplate, {
 			name: newOlajsava.name,
-			value: numeral(newOlajsava.value).format('0,0.00'),
+			value: eur(newOlajsava.value),
 			id: id
 		}));
 	});
@@ -235,7 +253,14 @@
 			out = $('#akontacija-dohodnine').val();
 		displayDohodnina(calcDohodnina(total, out));
 	});
-
+	if (window.localStorage !== undefined && window.localStorage !== null) {
+		$('#pobrisi-zgodovino').on('click', function () {
+			localStorage.clear();
+			window.location.reload();
+		});
+	} else {
+		$('#pobrisi-zgodovino').hide();
+	}
 
 	window['loadOlajsave'] = loadOlajsave;
 	window['loadLestvice'] = loadLestvice;

@@ -1,30 +1,33 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Izračun dohodnine</title>
+	<title>Informativni izračun dohodnine</title>
 	<link rel="stylesheet" type="text/css" href="ext/pure-min.css" />
 	<link rel="stylesheet" type="text/css" href="ext/pure-grids-responsive-min.css" />
+	
+	<link rel="stylesheet" type="text/css" href="css/pure-skin.css" />
 	<link rel="stylesheet" type="text/css" href="css/dohodnina.css" />
 
 	<meta name="viewport" content="width=device-width, initial-scale=1" />
 	<meta charset="UTF-8" />
 </head>
-<body>
+<body class="pure-skin-mine">
 	<div id="header">
-		<h1>Izračun dohodnine</h1>
+		<h1>Informativni izračun dohodnine</h1>
 	</div>
 	<div id="content" class="pure-g">
 		<div id="left-bar" class="pure-u-lg-1-2 pure-u-1">
 			<form class="pure-form pure-form-aligned">
 				<fieldset>
+					<h2>Osnovni letni podatki</h2>
 					<ul>
 						<li class="pure-control-group">
-							<label for="letni-zasluzek">Letni dohodki</label>
-							<input type="text" id="letni-zasluzek" />
+							<label for="letni-zasluzek">Dohodki</label>
+							<input type="text" id="letni-zasluzek" placeholder="€" />
 						</li>
 						<li class="pure-control-group">
 							<label for="akontacija-dohodnine">Akontacija dohodnine</label>
-							<input type="text" id="akontacija-dohodnine" />
+							<input type="text" id="akontacija-dohodnine" placeholder="€"/>
 						</li>
 					</ul>
 					<h2>Način izračuna</h2>
@@ -48,11 +51,12 @@
 					<ul id="olajsave-seznam">
 						<li class="olajsave-control">
 							<a id="dodaj-olajsavo-open" class="pure-button" href="#">dodaj olajšavo</a>
-							<span id="dodaj-olajsavo-box"><input type="text" id="olajsava-name" placeholder="vrsta" /> - <input type="text" id="olajsava-value" placeholder="znesek" /> <a id="dodaj-olajsavo-commit" class="pure-button" href="#">dodaj</a></span>
+							<span id="dodaj-olajsavo-box"><input type="text" id="olajsava-name" placeholder="vrsta" /> <input type="text" id="olajsava-value" placeholder="znesek" /> € <a id="dodaj-olajsavo-commit" class="pure-button" href="#">dodaj</a></span>
 						</li>
 					</ul>
-					<div class="center">
-						<a id="izracun-dohodnine" class="pure-button" href="#">Izračun</a>
+					<div>
+						<a id="izracun-dohodnine" class="pure-button pure-button-primary" href="#">Izračun</a> 
+						<a id="pobrisi-zgodovino" class="pure-button" href="#">Pobriši zgodovino</a>
 					</div>
 					
 				</fieldset>

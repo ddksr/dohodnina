@@ -23,5 +23,13 @@
 	"posebnaOsebnaOlajsava": {
 		"name": "Posebna osebna olajšava",
 		"value": 2477.03
+	},
+	"osebnaOlajsavaInvalidu": {
+		"name": "Osebna oljašava invalidu s 100% telesno okvaro",
+		"value": 17658.84
+	},
+	"olajsavaZaProstovoljnoPokojninskoZaravovanje": {
+		"name": "Olajšava za prostovoljno dodatno pokojninsko zavarovanje",
+		"value": 2819.09,
 	}
 }
