@@ -156,7 +156,7 @@
 			$('#calculations').append(table);
 		},
 		eur = function (val) {
-			return numeral(val).format('0,0.00 $');
+			return isNan(+val) ? val : numeral(val).format('0,0.00 $');
 		},
 		init = _.once(function () {
 			var storage = loadLocalStorage();
