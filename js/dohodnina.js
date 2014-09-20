@@ -63,9 +63,10 @@
 		},
 		calcDohodnina = function (totalStr, outStr) {
 			var output = [],
+				hasExp = !!$('.studentskoDelo:checked').length,
 				total = totalStr && getFloat(totalStr) || 0,
 				out = outStr && getFloat(outStr) || 0,
-				exp = lestvice.normiraniStroski * total,
+				exp = hasExp ? lestvice.normiraniStroski * total : 0,
 				norm = total - exp,
 				tax = norm,
 				olajsavePickedList = _.map($('.olajsava:checked'), function (elt) {
@@ -89,7 +90,7 @@
 				'Osnova dohodkov', total
 			]);
 			output.push([
-				'Normirani stroški', exp
+				'Normirani stroški', hasExp ? exp : 'Odšteto v dohodkih',
 			]);
 			_.each(olajsavePicked, function (specs, idOlajsave) {
 				var value = getValue(specs.value, norm);
@@ -109,7 +110,7 @@
 				var taxOut = 0,
 					condPrev = 0;
 				_.each(razredi, function (elt) {
-					var value = taxIn >= elt.cond ? ((elt.cond-condPrev) * elt.then) : (taxIn * elt.then);
+					var value = taxIn >= elt.cond ? ((elt.cond-condPrev) * elt.then) : ((taxIn - condPrev) * elt.then);
 					condPrev = elt.cond;
 					
 					output.push([
