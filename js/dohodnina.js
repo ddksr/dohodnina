@@ -63,7 +63,7 @@
 		},
 		calcDohodnina = function (totalStr, outStr) {
 			var output = [],
-				hasExp = !!$('.studentskoDelo:checked').length,
+				hasExp = $('.izracun:checked').val() === 'studentskoDelo',
 				total = totalStr && getFloat(totalStr) || 0,
 				out = outStr && getFloat(outStr) || 0,
 				exp = hasExp ? lestvice.normiraniStroski * total : 0,
